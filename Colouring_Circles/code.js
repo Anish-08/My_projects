@@ -34,6 +34,22 @@ function makewhite() {
     myCurrColour = "white";
 }
 
+function makered() {
+    myCurrColour = "red";
+}
+
+function makeorange() {
+    myCurrColour = "orange";
+}
+
+function makeblue() {
+    myCurrColour = "darkblue";
+}
+
+function makepink() {
+    myCurrColour = "pink";
+}
+
 
 canvas.width = 1366;
 canvas.height = 640;
@@ -72,10 +88,17 @@ onmousemove = function(e) {
     y = e.clientY;
 };
 onmousedown = function(e) {
+    myInterval = setInterval(whilemousedown, 1);
+}
+
+onmouseup = function(e) {
+    this.clearInterval(myInterval);
+}
+
+function whilemousedown() {
     myCirclex[t] = x;
     myCircley[t] = y;
     myColour[t] = myCurrColour;
     t = t + 1;
 }
-
 setInterval(update, 1)
