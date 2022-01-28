@@ -8,15 +8,7 @@ const myCircley = [];
 var myCurrColour = "#000000"
 t = 1;
 
-class myTuple {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-    prod() {
-        return this.x * this.y
-    }
-}
+
 
 function makegreen() {
     myCurrColour = "green";
