@@ -1,3 +1,43 @@
+var canvas = document.getElementById("myCanva");
+var mcv = canvas.getContext("2d");
+var x = 683;
+var y = 320;
+const myColour = [];
+const myCirclex = [];
+const myCircley = [];
+var myCurrColour = "#000000"
+t = 1;
+
+class myTuple {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    prod() {
+        return this.x * this.y
+    }
+}
+
+function makegreen() {
+    myCurrColour = "green";
+}
+
+function makeyellow() {
+    myCurrColour = "yellow";
+}
+
+function makeblack() {
+    myCurrColour = "black";
+}
+
+function makewhite() {
+    myCurrColour = "white";
+}
+
+
+canvas.width = 1366;
+canvas.height = 640;
+
 function update() {
     mcv.fillStyle = "#00FFFF";
     mcv.beginPath();
