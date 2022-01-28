@@ -1,7 +1,7 @@
 var canvas = document.getElementById("myCanva");
 var mcv = canvas.getContext("2d");
 var x = 683;
-var y = 320;
+var y = 300;
 const myColour = [];
 const myCirclex = [];
 const myCircley = [];
@@ -52,7 +52,7 @@ function makepink() {
 
 
 canvas.width = 1366;
-canvas.height = 640;
+canvas.height = 600;
 
 function update() {
     mcv.fillStyle = "#00FFFF";
