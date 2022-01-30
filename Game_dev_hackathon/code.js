@@ -22,21 +22,34 @@ snakey[0] = 25 * 8
 snakedir[0] = 1;
 
 
-
-
-
-//gamescreen
-function Draw_background() {
-
+//LEVEL 0 Normal Screen
+function level0() {
     ctx.fillStyle = "#2E8B57";
     ctx.beginPath();
     ctx.rect(0, 0, canvas.width, canvas.height);
     ctx.fill();
     ctx.closePath();
 
-    //H 
+
+    //Creating external walls
+    wall_image = new Image();
+    wall_image.src = 'wall.png';
+    wall_image.onload = function() {
+        for (let i = 0; i <= 40; i++) {
+            ctx.drawImage(wall_image, 30 * i, 0, 35, 25)
+            ctx.drawImage(wall_image, 30 * i, 550, 35, 25)
+        }
+        for (let i = 0; i <= 18; i++) {
+            ctx.drawImage(wall_image, 0, 30 * i, 25, 35)
+            ctx.drawImage(wall_image, 1200, 30 * i, 25, 35)
+        }
+
+    }
+}
 
 
+//LEVEl 1 H
+function level1() {
     if (1000 <= time && time < 1500 && time % 10 == 0) {
         ctx.fillStyle = "yellow";
         ctx.beginPath();
@@ -73,6 +86,10 @@ function Draw_background() {
         }
         currwallsize = 32;
     }
+}
+
+//LEVEL 2 ||
+function level2() {
     if (4500 <= time && time < 5000 && time % 10 == 0) {
         ctx.fillStyle = "yellow";
         ctx.beginPath();
@@ -103,21 +120,15 @@ function Draw_background() {
         currwallsize = 54;
     }
 
+}
 
-    //Creating external walls
-    wall_image = new Image();
-    wall_image.src = 'wall.png';
-    wall_image.onload = function() {
-        for (let i = 0; i <= 40; i++) {
-            ctx.drawImage(wall_image, 30 * i, 0, 35, 25)
-            ctx.drawImage(wall_image, 30 * i, 550, 35, 25)
-        }
-        for (let i = 0; i <= 18; i++) {
-            ctx.drawImage(wall_image, 0, 30 * i, 25, 35)
-            ctx.drawImage(wall_image, 1200, 30 * i, 25, 35)
-        }
 
-    }
+//gamescreen
+function Draw_background() {
+    level0();
+    level1();
+    level2();
+
 }
 
 
@@ -185,6 +196,7 @@ function draw_snake(u) {
     ctx.fill()
     ctx.closePath()
 }
+
 
 function update() {
     Draw_background()
