@@ -26,7 +26,7 @@ snakedir[0] = 1;
 
 //LEVEL 0 Normal Screen
 function level0() {
-    ctx.fillStyle = "#2E8B57";
+    ctx.fillStyle = "#7fffd4";
     ctx.beginPath();
     ctx.rect(0, 0, canvas.width, canvas.height);
     ctx.fill();
@@ -34,29 +34,33 @@ function level0() {
 
 
     //Creating external walls
-    wall_image = new Image();
-    wall_image.src = 'wall.png';
-    wall_image.onload = function() {
-        for (let i = 0; i <= 40; i++) {
-            ctx.drawImage(wall_image, 30 * i, 0, 35, 25)
-            ctx.drawImage(wall_image, 30 * i, 550, 35, 25)
-        }
-        for (let i = 0; i <= 18; i++) {
-            ctx.drawImage(wall_image, 0, 30 * i, 25, 35)
-            ctx.drawImage(wall_image, 1200, 30 * i, 25, 35)
-        }
+    ctx.fillStyle = "#008080";
+    ctx.beginPath()
+    for (let i = 0; i <= 40; i++) {
+        ctx.rect(30 * i, 0, 35, 25);
+        ctx.rect(30 * i, 550, 35, 25)
 
     }
+    for (let i = 0; i <= 18; i++) {
+        ctx.rect(0, 30 * i, 25, 35);
+
+        ctx.rect(1200, 30 * i, 25, 35);
+
+    }
+    ctx.fill()
+    ctx.closePath()
+
+
 }
 
 
 //LEVEl 1 H
 function level1() {
     if (1000 <= time && time < 1500 && time % 10 <= 4) {
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "white";
         ctx.beginPath();
-        ctx.rect(25 * 19, 25 * 11, 10 * 25, 25); //horizontal tab
-        ctx.rect(25 * 19, 25 * 11 - 125, 25, 11 * 25); // vertical left
+        ctx.rect(25 * 20, 25 * 11, 10 * 25, 25); //horizontal tab
+        ctx.rect(25 * 20, 25 * 11 - 125, 25, 11 * 25); // vertical left
         ctx.rect(25 * 29, 25 * 11 - 125, 25, 11 * 25); //vertical right
         ctx.fill();
         ctx.closePath();
@@ -64,8 +68,8 @@ function level1() {
     if (time >= 1500) {
         ctx.fillStyle = "#000000";
         ctx.beginPath();
-        ctx.rect(25 * 19, 25 * 11, 10 * 25, 25); //horizontal tab
-        ctx.rect(25 * 19, 25 * 11 - 125, 25, 11 * 25); // vertical left
+        ctx.rect(25 * 20, 25 * 11, 10 * 25, 25); //horizontal tab
+        ctx.rect(25 * 20, 25 * 11 - 125, 25, 11 * 25); // vertical left
         ctx.rect(25 * 29, 25 * 11 - 125, 25, 11 * 25); //vertical right
         ctx.fill();
         ctx.closePath();
@@ -73,27 +77,27 @@ function level1() {
     }
 
     if (time == 1500) {
-        for (let p = 0; p <= 10; p++) {
-            wallsx[p] = 25 * 19 + p * 25;
+        for (let p = 0; p <= 9; p++) {
+            wallsx[p] = 25 * 20 + p * 25;
             wallsy[p] = 25 * 11;
         }
 
-        for (let p = 11; p <= 21; p++) {
+        for (let p = 10; p <= 20; p++) {
             wallsx[p] = 25 * 29;
-            wallsy[p] = 25 * 6 + (p - 11) * 25;
+            wallsy[p] = 25 * 6 + (p - 10) * 25;
         }
-        for (let p = 22; p <= 32; p++) {
-            wallsx[p] = 25 * 19;
-            wallsy[p] = 25 * 6 + (p - 22) * 25;
+        for (let p = 21; p <= 31; p++) {
+            wallsx[p] = 25 * 20;
+            wallsy[p] = 25 * 6 + (p - 21) * 25;
         }
-        currwallsize = 32;
+        currwallsize = 31;
     }
 }
 
 //LEVEL 2 ||
 function level2() {
     if (4500 <= time && time < 5000 && time % 10 <= 4) {
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "white";
         ctx.beginPath();
         //ctx.rect(25 * 19, 25 * 11, 10 * 25, 25); //horizontal tab
         ctx.rect(25 * 9, 25 * 11 - 125, 25, 11 * 25); // vertical left
@@ -111,15 +115,110 @@ function level2() {
         ctx.closePath();
     }
     if (time == 5000) {
-        for (let p = 33; p <= 43; p++) {
+        for (let p = 32; p <= 42; p++) {
             wallsx[p] = 25 * 9;
-            wallsy[p] = 25 * 6 + (p - 33) * 25;
+            wallsy[p] = 25 * 6 + (p - 32) * 25;
         }
-        for (let p = 44; p <= 54; p++) {
+        for (let p = 43; p <= 53; p++) {
             wallsx[p] = 25 * 40;
-            wallsy[p] = 25 * 6 + (p - 44) * 25;
+            wallsy[p] = 25 * 6 + (p - 43) * 25;
         }
-        currwallsize = 54;
+        currwallsize = 53;
+    }
+
+}
+
+function level3() {
+    if (time <= 7500 && time >= 7000 && time % 10 <= 4) {
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.rect(25 * 29, 25 * 11 - 125, 9 * 25, 25); // top right
+        ctx.rect(25 * 29, 25 * 21 - 125, 9 * 25, 25); //bottom right
+        ctx.rect(25 * 12, 25 * 11 - 125, 9 * 25, 25); // top left
+        ctx.rect(25 * 12, 25 * 21 - 125, 9 * 25, 25); //bottom left
+        ctx.fill();
+        ctx.closePath();
+    }
+    if (time >= 7500) {
+        ctx.fillStyle = "#000000";
+        ctx.beginPath();
+        ctx.rect(25 * 29, 25 * 11 - 125, 9 * 25, 25); // top right
+        ctx.rect(25 * 29, 25 * 21 - 125, 9 * 25, 25); //bottom right
+        ctx.rect(25 * 12, 25 * 11 - 125, 9 * 25, 25); // top left
+        ctx.rect(25 * 12, 25 * 21 - 125, 9 * 25, 25); //bottom left
+        ctx.fill();
+        ctx.closePath();
+    }
+    if (time == 7500) {
+        for (let p = 54; p <= 62; p++) {
+            wallsx[p] = 25 * 29 + (p - 54) * 25;
+            wallsy[p] = 25 * 11 - 125;
+        }
+        for (let p = 63; p <= 71; p++) {
+            wallsx[p] = 25 * 29 + (p - 63) * 25;
+            wallsy[p] = 25 * 21 - 125;
+        }
+        for (let p = 72; p <= 80; p++) {
+            wallsx[p] = 25 * 12 + (p - 72) * 25;
+            wallsy[p] = 25 * 11 - 125;
+        }
+        for (let p = 81; p <= 89; p++) {
+            wallsx[p] = 25 * 12 + (p - 81) * 25;
+            wallsy[p] = 25 * 21 - 125;
+        }
+        currwallsize = 89;
+    }
+}
+
+
+//LEVEL 4 ||
+function level4() {
+    if (9500 <= time && time < 10000 && time % 10 <= 4) {
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.rect(25 * 10, 25 * 11, 6 * 25, 25); //horizontal tab
+        ctx.rect(25 * 34, 25 * 11, 6 * 25, 25); //horizontal tab
+        ctx.rect(25 * 24, 25 * 1, 50, 7 * 25); // vertical 
+        ctx.rect(25 * 24, 25 * 22 - 175, 50, 7 * 25); //vertical
+        ctx.fill();
+        ctx.closePath();
+    }
+    if (time >= 10000) { //left rectangle and right
+        ctx.fillStyle = "#000000";
+        ctx.beginPath();
+        ctx.rect(25 * 10, 25 * 11, 6 * 25, 25); //horizontal tab
+        ctx.rect(25 * 34, 25 * 11, 6 * 25, 25); //horizontal tab
+        ctx.rect(25 * 24, 25 * 1, 50, 7 * 25); // vertical 
+        ctx.rect(25 * 24, 25 * 22 - 175, 50, 7 * 25); //vertical down 
+        ctx.fill();
+        ctx.closePath();
+    }
+    if (time == 10000) {
+        for (let p = 90; p <= 95; p++) {
+            wallsx[p] = 25 * 10 + (p - 90) * 25;
+            wallsy[p] = 25 * 11;
+        }
+        for (let p = 96; p <= 101; p++) {
+            wallsx[p] = 25 * 34 + (p - 96) * 25;
+            wallsy[p] = 25 * 11;
+        }
+        for (let p = 102; p <= 108; p++) {
+            wallsx[p] = 25 * 24;
+            wallsy[p] = 25 * 1 + (p - 102) * 25;
+        }
+        for (let p = 109; p <= 115; p++) {
+            wallsx[p] = 25 * 25;
+            wallsy[p] = 25 * 1 + (p - 109) * 25;
+        }
+        for (let p = 115; p <= 121; p++) {
+            wallsx[p] = 25 * 24;
+            wallsy[p] = 25 * 22 - 175 + (p - 115) * 25;
+        }
+        for (let p = 122; p <= 128; p++) {
+            wallsx[p] = 25 * 25;
+            wallsy[p] = 25 * 22 - 175 + (p - 122) * 25;
+        }
+        currwallsize = 128;
     }
 
 }
@@ -140,6 +239,8 @@ function Draw_background() {
     level0();
     level1();
     level2();
+    level3();
+    level4();
     bonus_points();
 }
 
@@ -202,11 +303,47 @@ function move_snake(u) {
 }
 
 function draw_snake(u) {
-    ctx.fillStyle = '#DC143C'
+    ctx.fillStyle = '#FFA500'
     ctx.beginPath()
     ctx.rect(snakex[u], snakey[u], 25, 25)
     ctx.fill()
     ctx.closePath()
+    if (u == 0) {
+
+        if (snakedir[0] == 1) {
+            ctx.fillStyle = 'black'
+            ctx.beginPath()
+            ctx.rect(snakex[u] + 6, snakey[u] + 4, 4, 4)
+            ctx.rect(snakex[u] + 15, snakey[u] + 4, 4, 4)
+            ctx.fill()
+            ctx.closePath()
+        }
+        if (snakedir[0] == 2) {
+            ctx.fillStyle = 'black'
+            ctx.beginPath()
+            ctx.rect(snakex[u] + 17, snakey[u] + 6, 4, 4)
+            ctx.rect(snakex[u] + 17, snakey[u] + 15, 4, 4)
+            ctx.fill()
+            ctx.closePath()
+        }
+        if (snakedir[0] == 3) {
+            ctx.fillStyle = 'black'
+            ctx.beginPath()
+            ctx.rect(snakex[u] + 6, snakey[u] + 17, 4, 4)
+            ctx.rect(snakex[u] + 15, snakey[u] + 17, 4, 4)
+            ctx.fill()
+            ctx.closePath()
+        }
+        if (snakedir[0] == 4) {
+            ctx.fillStyle = 'black'
+            ctx.beginPath()
+            ctx.rect(snakex[u] + 4, snakey[u] + 6, 4, 4)
+            ctx.rect(snakex[u] + 4, snakey[u] + 15, 4, 4)
+            ctx.fill()
+            ctx.closePath()
+        }
+
+    }
 }
 
 
