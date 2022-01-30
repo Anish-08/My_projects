@@ -15,10 +15,12 @@ var gameendistrue = 0;
 var currsize = 1;
 var currwallsize = 0;
 var time = 0;
+var score = 0;
+var currbonusx = 25;
+var currbonusy = 25;
 
 snakex[0] = 25 * 25
 snakey[0] = 25 * 8
-
 snakedir[0] = 1;
 
 
@@ -50,7 +52,7 @@ function level0() {
 
 //LEVEl 1 H
 function level1() {
-    if (1000 <= time && time < 1500 && time % 10 == 0) {
+    if (1000 <= time && time < 1500 && time % 10 <= 4) {
         ctx.fillStyle = "yellow";
         ctx.beginPath();
         ctx.rect(25 * 19, 25 * 11, 10 * 25, 25); //horizontal tab
@@ -90,7 +92,7 @@ function level1() {
 
 //LEVEL 2 ||
 function level2() {
-    if (4500 <= time && time < 5000 && time % 10 == 0) {
+    if (4500 <= time && time < 5000 && time % 10 <= 4) {
         ctx.fillStyle = "yellow";
         ctx.beginPath();
         //ctx.rect(25 * 19, 25 * 11, 10 * 25, 25); //horizontal tab
@@ -122,13 +124,23 @@ function level2() {
 
 }
 
+function bonus_points() {
+    apple_image = new Image();
+    apple_image.src = 'apple.png';
+    apple_image.onload = function() {
+        ctx.drawImage(apple_image, currbonusx, currbonusy, 25, 25);
+    }
+
+
+}
+
 
 //gamescreen
 function Draw_background() {
     level0();
     level1();
     level2();
-
+    bonus_points();
 }
 
 
@@ -198,6 +210,14 @@ function draw_snake(u) {
 }
 
 
+function show_score() {
+    var div = document.getElementById('score_view');
+    div.innerHTML = "LENGTH = " + currsize + "&nbsp &nbsp &nbsp BONUS = " + score;
+}
+
+
+
+
 function update() {
     Draw_background()
     if (time % 1000 == 0) {
@@ -212,6 +232,7 @@ function update() {
     if (time % 50 == 0) {
         direction(snakedir[0]);
     }
+    show_score();
     time = time + 1;
 }
 
@@ -267,10 +288,18 @@ function collision_check() {
         if (h == snakex[p] && k == snakey[p]) gameendistrue = 1;
     }
 
-
+    if (h == currbonusx && k == currbonusy) {
+        score += 5;
+        currbonusx = 25 + 25 * Math.floor(Math.random() * 47);
+        currbonusy = 25 + 25 * Math.floor(Math.random() * 21);
+        while (check_if_available() == 0) {
+            currbonusx = 25 + 25 * Math.floor(Math.random() * 47);
+            currbonusy = 25 + 25 * Math.floor(Math.random() * 21);
+        }
+    }
     //ending the game if collision has occured
     if (gameendistrue == 1) {
-        alert("Game Over ! \n" + "Your Score is " + currsize);
+        alert("Game Over ! \n" + "Your Score is " + (score + currsize));
 
         clearInterval(one);
         clearInterval(two);
@@ -278,8 +307,12 @@ function collision_check() {
 }
 
 
-
-
+function check_if_available() {
+    for (let u = 0; u <= currwallsize; u++) {
+        if (currbonusx == wallsx[u] && currbonusy == wallsy[u]) return 0;
+    }
+    return 1;
+}
 
 
 //Running the game
