@@ -16,11 +16,11 @@ var currsize = 1;
 var currwallsize = 0;
 var time = 0;
 var score = 0;
-var currbonusx = 25;
-var currbonusy = 25;
+var currbonusx = 25 * 25;
+var currbonusy = 25 * 5;
 
 snakex[0] = 25 * 25
-snakey[0] = 25 * 8
+snakey[0] = 25 * 16
 snakedir[0] = 1;
 
 
