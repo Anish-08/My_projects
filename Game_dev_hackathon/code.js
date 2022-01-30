@@ -13,32 +13,20 @@ const wallsy = [];
 var gameendistrue = 0;
 
 var currsize = 1;
-// var direction = 1;
+var currwallsize = 0;
 var time = 0;
 
-snakex[0] = coordinatestuff(25)
-snakey[0] = coordinatestuff(8)
-    /*snakex[1] = coordinatestuff(20)
-    snakey[1] = coordinatestuff(12)
-    snakex[2] = coordinatestuff(20)
-    snakey[2] = coordinatestuff(13)
-    snakex[3] = coordinatestuff(20)
-    snakey[3] = coordinatestuff(14)
-    snakex[4] = coordinatestuff(20)
-    snakey[4] = coordinatestuff(15) */
-snakedir[0] = 1;
-/*snakedir[1] = 1;
-snakedir[2] = 1;
-snakedir[3] = 1;
-snakedir[4] = 1;*/
+snakex[0] = 25 * 25
+snakey[0] = 25 * 8
 
-//Placement of walls
+snakedir[0] = 1;
+
 
 
 
 
 //gamescreen
-function Setup() {
+function Draw_background() {
 
     ctx.fillStyle = "#2E8B57";
     ctx.beginPath();
@@ -83,6 +71,7 @@ function Setup() {
             wallsx[p] = 25 * 19;
             wallsy[p] = 25 * 6 + (p - 22) * 25;
         }
+        currwallsize = 32;
     }
     if (4500 <= time && time < 5000 && time % 10 == 0) {
         ctx.fillStyle = "yellow";
@@ -111,7 +100,11 @@ function Setup() {
             wallsx[p] = 25 * 40;
             wallsy[p] = 25 * 6 + (p - 44) * 25;
         }
+        currwallsize = 54;
     }
+
+
+    //Creating external walls
     wall_image = new Image();
     wall_image.src = 'wall.png';
     wall_image.onload = function() {
@@ -127,12 +120,12 @@ function Setup() {
     }
 }
 
-function coordinatestuff(t) {
-    return 25 * t;
-
-}
 
 
+
+
+
+//Setting direction of entire snake
 function direction(d) {
     var u = currsize - 1;
     while (u > 0) {
@@ -142,50 +135,66 @@ function direction(d) {
     snakedir[0] = d;
 }
 
+
+//To increase size of snake every 100 sec 
+function increase_size_of_snake() {
+    if (snakedir[0] == 1) {
+        u = 0;
+        v = 1;
+    }
+    if (snakedir[0] == 2) {
+        u = -1;
+        v = 0;
+    }
+    if (snakedir[0] == 3) {
+        u = 0;
+        v = -1;
+    }
+    if (snakedir[0] == 4) {
+        u = 1;
+        v = 0;
+    }
+    snakex[currsize] = snakex[currsize - 1] + u * 25;
+    snakey[currsize] = snakey[currsize - 1] + v * 25;
+    snakedir[currsize] = snakedir[0];
+    currsize = currsize + 1;
+
+}
+
+
+
+function move_snake(u) {
+    if (snakedir[u] == 1) {
+        snakey[u] = snakey[u] - 25;
+    }
+    if (snakedir[u] == 2) {
+        snakex[u] = snakex[u] + 25;
+    }
+    if (snakedir[u] == 3) {
+        snakey[u] = snakey[u] + 25;
+    }
+    if (snakedir[u] == 4) {
+        snakex[u] = snakex[u] - 25;
+    }
+}
+
+function draw_snake(u) {
+    ctx.fillStyle = '#DC143C'
+    ctx.beginPath()
+    ctx.rect(snakex[u], snakey[u], 25, 25)
+    ctx.fill()
+    ctx.closePath()
+}
+
 function update() {
-    Setup()
+    Draw_background()
     if (time % 1000 == 0) {
-        if (snakedir[0] == 1) {
-            u = 0;
-            v = 1;
-        }
-        if (snakedir[0] == 2) {
-            u = -1;
-            v = 0;
-        }
-        if (snakedir[0] == 3) {
-            u = 0;
-            v = -1;
-        }
-        if (snakedir[0] == 4) {
-            u = 1;
-            v = 0;
-        }
-        snakex[currsize] = snakex[currsize - 1] + u * 25;
-        snakey[currsize] = snakey[currsize - 1] + v * 25;
-        snakedir[currsize] = snakedir[0];
-        currsize = currsize + 1;
+        increase_size_of_snake();
     }
     for (let u = 0; u < currsize; u++) {
-        ctx.fillStyle = '#DC143C'
-        ctx.beginPath()
-        ctx.rect(snakex[u], snakey[u], 25, 25)
-        ctx.fill()
-        ctx.closePath()
+        draw_snake(u);
         if (time % 50 == 0) {
-            if (snakedir[u] == 1) {
-                snakey[u] = snakey[u] - 25;
-            }
-            if (snakedir[u] == 2) {
-                snakex[u] = snakex[u] + 25;
-            }
-            if (snakedir[u] == 3) {
-                snakey[u] = snakey[u] + 25;
-            }
-            if (snakedir[u] == 4) {
-                snakex[u] = snakex[u] - 25;
-            }
-
+            move_snake(u);
         }
     }
     if (time % 50 == 0) {
@@ -194,6 +203,11 @@ function update() {
     time = time + 1;
 }
 
+
+
+
+
+//Taking input from user pressing keys
 onkeydown = function(e) {
     switch (e.which) {
         case 37: //left
@@ -217,28 +231,35 @@ onkeydown = function(e) {
 
 }
 
+
+
+//Collision Check
 function collision_check() {
     var h = snakex[0];
-    var k = snakey[0]
+    var k = snakey[0];
+
+    //Checking for external Wall collision 
     if (h < 25 || h >= 1185) gameendistrue = 1;
 
     if (k < 25 || k >= 550) gameendistrue = 1;
 
-    if (time >= 5000) t = 54;
-    else if (time >= 1500) t = 32;
-    else t = 0;
-    for (let p = 0; p <= t; p++) {
+
+    //Checking for internal wall collision
+    for (let p = 0; p <= currwallsize; p++) {
         if (h == wallsx[p] && k == wallsy[p]) gameendistrue = 1;
     }
+
+
+    //Checking for self collision
     for (let p = 1; p < currsize; p++) {
         if (h == snakex[p] && k == snakey[p]) gameendistrue = 1;
     }
 
 
-    //if (h == 100 && k == 100)
-
+    //ending the game if collision has occured
     if (gameendistrue == 1) {
-        alert("Game Over !");
+        alert("Game Over ! \n" + "Your Score is " + currsize);
+
         clearInterval(one);
         clearInterval(two);
     }
@@ -249,48 +270,7 @@ function collision_check() {
 
 
 
-
-
-// Gaming area  - (35,25 --- 35,550) (35,25 ----- 1210, 25) 21 47 
-// 
-
-
+//Running the game
 
 two = setInterval(update, 0.1)
 one = setInterval(collision_check, 0.1)
-
-
-
-
-
-
-
-
-
-
-
-/*
-function update() {
-
-    ctx.fillStyle = "#FF0000";
-    ctx.beginPath();
-
-    ctx.rect(0, 0, canvas.width, canvas.height);
-    ctx.fill();
-    ctx.closePath();
-
-    ctx.fillStyle = "#00FFFF";
-    ctx.beginPath();
-
-    ctx.arc(x, y, 10, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.closePath();
-}
-onmousemove = function(e) {
-    x = e.clientX;
-    y = e.clientY;
-
-
-}
-
-setInterval(update, 1) */
