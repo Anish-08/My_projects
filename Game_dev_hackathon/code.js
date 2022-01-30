@@ -380,18 +380,18 @@ function update() {
 //Taking input from user pressing keys
 onkeydown = function(e) {
     switch (e.which) {
-        case 37: //left
+        case 65: //left
             snakedir[0] = 4;
             break;
-        case 38: //up
+        case 87: //up
             snakedir[0] = 1;
             break;
 
-        case 39: //right
+        case 68: //right
             snakedir[0] = 2;
             break;
 
-        case 40:
+        case 83:
             //down
             snakedir[0] = 3;
             break;
