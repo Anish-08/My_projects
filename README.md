@@ -1,2 +1,2 @@
 # My_projects
-Some Stuff I create
+Some stuff I create
