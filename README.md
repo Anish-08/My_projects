@@ -1,4 +1,4 @@
-# My_projects 
+# My projects 
 ## JavaScript:
 - Snake Game
 - Colouring Circles
