@@ -1,4 +1,4 @@
-# Snake_Game
+# Snake Game
 ## Created with Aparna Agrawal for Game-Dev competition (Team name : Late Current)
 ### Brief description
 
