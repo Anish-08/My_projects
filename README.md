@@ -1,4 +1,4 @@
 # My_projects 
-## Some stuff I created:
--Snake Game
--Colouring Circles
+## JavaScript:
+- Snake Game
+- Colouring Circles
